@@ -90,21 +90,21 @@ function closeProductModal() {
 // Toggle option selection
 function toggleOption(optionId, optionName, optionPrice) {
     const checkbox = document.getElementById(`option-${optionId}`);
-    const isChecked = checkbox.checked;
-
-    if (isChecked) {
-        // Remove option
-        ModalState.selectedOptions = ModalState.selectedOptions.filter(opt => opt.id !== optionId);
-    } else {
+    
+    if (!checkbox.checked) {
         // Add option
         ModalState.selectedOptions.push({
             id: optionId,
             name: optionName,
             price: optionPrice
         });
+        checkbox.checked = true;
+    } else {
+        // Remove option
+        ModalState.selectedOptions = ModalState.selectedOptions.filter(opt => opt.id !== optionId);
+        checkbox.checked = false;
     }
 
-    checkbox.checked = !isChecked;
     updateModalPrice();
 }
 

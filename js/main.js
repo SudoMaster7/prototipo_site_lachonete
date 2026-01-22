@@ -6,7 +6,8 @@
 // Application state
 const App = {
     initialized: false,
-    version: '1.0.0'
+    version: '1.0.1',
+    searchTerm: ''
 };
 
 // Initialize application
@@ -21,6 +22,7 @@ function initializeApp() {
 
         // Initialize event listeners
         initializeEventListeners();
+        initializeSearchListener();
         console.log('✓ Event listeners attached');
 
         // Initialize cart
@@ -48,6 +50,77 @@ function initializeApp() {
     } catch (error) {
         console.error('Error initializing application:', error);
         showToast('Erro ao inicializar aplicação', 'error');
+    }
+}
+
+// Initialize search functionality
+function initializeSearchListener() {
+    const searchInput = document.getElementById('searchInput');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase().trim();
+        App.searchTerm = term;
+        filterProducts(term);
+    });
+
+    // Clear search on escape
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            searchInput.value = '';
+            App.searchTerm = '';
+            filterProducts('');
+        }
+    });
+}
+
+// Filter products based on search term
+function filterProducts(searchTerm) {
+    const allProducts = document.querySelectorAll('.product-card');
+    let visibleCount = 0;
+
+    allProducts.forEach(card => {
+        const name = card.querySelector('.product-name')?.textContent.toLowerCase() || '';
+        const category = card.querySelector('.product-category')?.textContent.toLowerCase() || '';
+        const description = card.querySelector('.product-description')?.textContent.toLowerCase() || '';
+
+        const matches = !searchTerm || 
+                       name.includes(searchTerm) || 
+                       category.includes(searchTerm) || 
+                       description.includes(searchTerm);
+
+        if (matches) {
+            card.style.display = '';
+            visibleCount++;
+            card.classList.add('animate-in');
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    // Show "no results" message if needed
+    const allGrids = document.querySelectorAll('.products-grid');
+    allGrids.forEach(grid => {
+        const visibleCards = grid.querySelectorAll('.product-card:not([style*="display: none"])');
+        const emptyMsg = grid.querySelector('.empty-search');
+        
+        if (visibleCards.length === 0 && searchTerm) {
+            if (!emptyMsg) {
+                const msg = document.createElement('div');
+                msg.className = 'empty-search';
+                msg.innerHTML = `
+                    <p>😅 Nenhum produto encontrado para "<strong>${searchTerm}</strong>"</p>
+                    <small>Tente outro termo de busca</small>
+                `;
+                grid.appendChild(msg);
+            }
+        } else if (emptyMsg) {
+            emptyMsg.remove();
+        }
+    });
+
+    if (visibleCount === 0 && searchTerm) {
+        showToast(`Nenhum resultado para "${searchTerm}"`, 'info');
     }
 }
 

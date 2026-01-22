@@ -1,0 +1,286 @@
+/* ========================================
+   ANIMATIONS & TRANSITIONS
+   ======================================== */
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Skeleton Loading Animation */
+.skeleton {
+    background: linear-gradient(90deg,
+            var(--bg-dark-elevated) 0%,
+            var(--bg-card-hover) 50%,
+            var(--bg-dark-elevated) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-md);
+}
+
+.skeleton-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(90deg,
+            var(--bg-dark-elevated) 0%,
+            var(--bg-card-hover) 50%,
+            var(--bg-dark-elevated) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.skeleton-text {
+    height: 20px;
+    margin-bottom: var(--spacing-sm);
+    background: linear-gradient(90deg,
+            var(--bg-dark-elevated) 0%,
+            var(--bg-card-hover) 50%,
+            var(--bg-dark-elevated) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-sm);
+}
+
+.skeleton-text.short {
+    width: 60%;
+}
+
+/* Hover Effects */
+.hover-lift {
+    transition: transform var(--transition-base);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+}
+
+.hover-scale {
+    transition: transform var(--transition-base);
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.hover-glow {
+    position: relative;
+    transition: all var(--transition-base);
+}
+
+.hover-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    z-index: -1;
+    filter: blur(10px);
+}
+
+.hover-glow:hover::before {
+    opacity: 0.7;
+}
+
+/* Bounce Animation for Added Items */
+.bounce {
+    animation: bounce 0.6s ease-in-out;
+}
+
+/* Fade Transitions */
+.fade-enter {
+    opacity: 0;
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity var(--transition-base);
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+/* Slide Transitions */
+.slide-enter {
+    transform: translateX(100%);
+}
+
+.slide-enter-active {
+    transform: translateX(0);
+    transition: transform var(--transition-slow);
+}
+
+.slide-exit {
+    transform: translateX(0);
+}
+
+.slide-exit-active {
+    transform: translateX(100%);
+    transition: transform var(--transition-slow);
+}
+
+/* Loading Spinner */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--bg-dark-elevated);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: rotate 0.8s linear infinite;
+}
+
+/* Ripple Effect */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.ripple:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Parallax Effect for Hero */
+.parallax {
+    will-change: transform;
+}
+
+/* Utility Classes */
+.animate-in {
+    animation: fadeIn var(--transition-base);
+}
+
+.animate-slide-up {
+    animation: slideUp var(--transition-slow);
+}
+
+.animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Stagger Animation for Grid Items */
+.products-grid .product-card {
+    animation: fadeIn var(--transition-slow);
+    animation-fill-mode: both;
+}
+
+.products-grid .product-card:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.products-grid .product-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.products-grid .product-card:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.products-grid .product-card:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.products-grid .product-card:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+.products-grid .product-card:nth-child(6) {
+    animation-delay: 0.3s;
+}

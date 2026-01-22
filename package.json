@@ -1,0 +1,18 @@
+{
+  "name": "sudo-site-food",
+  "version": "1.0.0",
+  "description": "SUDO Site Food - Restaurant & Snack Bar E-commerce Platform",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": [
+    "restaurant",
+    "food",
+    "ecommerce",
+    "sudocode"
+  ],
+  "author": "EASY MONEY 10K",
+  "license": "MIT"
+}
